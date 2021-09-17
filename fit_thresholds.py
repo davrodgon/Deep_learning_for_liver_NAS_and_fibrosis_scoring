@@ -335,7 +335,7 @@ def main(args):
 		############################################################################################################################################
 		# Get arguments from YAML		
 		############################################################################################################################################
-		config_yaml = yaml.load(file)
+		config_yaml = yaml.load(file, Loader=yaml.SafeLoader)	
 		
 		# Model base path
 		model_base_path = config_yaml["settings"]["model_base_path"]				

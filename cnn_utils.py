@@ -312,14 +312,14 @@ class cnn_utils:
 					 EarlyStopping(monitor='val_loss',min_delta=0,patience=4,verbose=1, mode='auto'),
 					 ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2, cooldown=1, verbose=1, min_lr=1e-7)]
 										
-		self.history = self.model.fit_generator(self.train_generator,
-									  steps_per_epoch = self.train_generator.n // self.batch_size,
-									  epochs = n_epochs,
-									  validation_data = self.validation_generator,
-									  validation_steps = self.validation_generator.n // self.batch_size,
-									  verbose = 1,
-									  class_weight = self.class_weight,
-									  callbacks = callbacks)
+		self.history = self.model.fit(self.train_generator,
+                                steps_per_epoch = self.train_generator.n // self.batch_size,
+								epochs = n_epochs,
+								validation_data = self.validation_generator,
+								validation_steps = self.validation_generator.n // self.batch_size,
+								verbose = 1,
+								class_weight = self.class_weight,
+								callbacks = callbacks)
 									  
 	def save_learning_curves(self):
 		""" Saves the learning curve in results_base_model_path			
@@ -375,7 +375,7 @@ class cnn_utils:
 				shuffle = False)
 
 		# Make the prediction		
-		y_predict_val = self.model.predict_generator(test_generator, test_generator.n, verbose=1)
+		y_predict_val = self.model.predict(test_generator, test_generator.n, verbose=1)
 			
 		# Create data frame with a list of the validation data
 		validation_list = pd.DataFrame(columns = self.list_of_classes)
@@ -515,7 +515,7 @@ class cnn_utils:
 		# print(test_generator.n, len(test_generator.filenames))
 			
 		# Make the prediction
-		y_predict = self.model.predict_generator(test_generator, test_generator.n, verbose=1)
+		y_predict = self.model.predict(test_generator, test_generator.n, verbose=1)
 			
 		# Add classification results to a dataframe
 		df = pd.DataFrame(y_predict, columns = self.list_of_classes)

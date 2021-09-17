@@ -30,7 +30,7 @@ def main(args):
 		start = time.time()
 	
 		# Get arguments from YAML		
-		config_yaml = yaml.load(file)		
+		config_yaml = yaml.load(file, Loader=yaml.SafeLoader)		
 
 		# Scores
 		score_list = ["Ballooning", "Inflammation", "Steatosis", "Fibrosis"]

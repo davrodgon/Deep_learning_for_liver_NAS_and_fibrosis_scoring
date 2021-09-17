@@ -24,7 +24,7 @@ def main(args):
 	# given as command line argument
 	with open(args.config, "r") as file:		
 		# Get arguments from YAML		
-		config_yaml = yaml.load(file)										
+		config_yaml = yaml.load(file, Loader=yaml.SafeLoader)											
 		model_path = config_yaml["model"]["model_path"]		
 		model_file_name = config_yaml["model"]["model_file_name"]				
 		ground_truth_path = config_yaml["tiles"]["ground_truth_path"]

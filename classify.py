@@ -28,7 +28,7 @@ def main(args):
 		start = time.time()
 	
 		# Get arguments from YAML		
-		config_yaml = yaml.load(file)											
+		config_yaml = yaml.load(file, Loader=yaml.SafeLoader)											
 		model_path = config_yaml["model"]["model_path"]	
 		model_file_name = config_yaml["model"]["model_file_name"]				
 		list_of_classes = config_yaml["model"]["list_of_classes"]		
