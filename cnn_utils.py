@@ -25,16 +25,15 @@ import matplotlib.pyplot as plt
 import json
 from sklearn.metrics import confusion_matrix
 import tensorflow as tf
-from keras.preprocessing.image import ImageDataGenerator
-from keras.models import Sequential, Model
-from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D, Input
-from keras.layers import Activation, Dropout, Flatten, Dense, BatchNormalization
-from keras.models import load_model
-from keras import backend as K
-from keras import applications
-from keras import optimizers
-from keras.callbacks import EarlyStopping, TensorBoard, ReduceLROnPlateau, ModelCheckpoint
-from keras.utils import multi_gpu_model
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D, Input
+from tensorflow.keras.layers import Activation, Dropout, Flatten, Dense, BatchNormalization
+from tensorflow.keras.models import load_model
+from tensorflow.keras import backend as K
+from tensorflow.keras import applications
+from tensorflow.keras import optimizers
+from tensorflow.keras.callbacks import EarlyStopping, TensorBoard, ReduceLROnPlateau, ModelCheckpoint
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -84,7 +83,7 @@ class cnn_utils:
 		self.batch_size = 32
 		
 		# Device to run model on, e.g: "/gpu:0", or "/cpu:0"
-		# See: https://stackoverflow.com/questions/40690598/can-keras-with-tensorflow-backend-be-forced-to-use-cpu-or-gpu-at-will		
+		# See: https://stackoverflow.com/questions/40690598/can-tensorflow.keras.with-tensorflow-backend-be-forced-to-use-cpu-or-gpu-at-will		
 		self.device_str = "/gpu:0"		
 		
 		# Class weight ratios to compensate class imbalance during training
@@ -165,7 +164,7 @@ class cnn_utils:
 	def prepare_image_data_generators(self):
 		""" Sets class members 
 			<self.train_generator> and <self.validation_generator> 
-			with configured keras data generators for train and validation
+			with configured tensorflow.keras.data generators for train and validation
 		
 		Args:
 			None (TODO: Allow to modify augmentation settings)
@@ -327,8 +326,8 @@ class cnn_utils:
 		"""
 		
 		learning_curves = pd.DataFrame()
-		learning_curves["acc"] = self.history.history["acc"]
-		learning_curves["val_acc"] = self.history.history["val_acc"]
+		learning_curves["accuracy"] = self.history.history["accuracy"]
+		learning_curves["val_accuracy"] = self.history.history["val_accuracy"]
 		learning_curves["loss"] = self.history.history["loss"]
 		learning_curves["val_loss"] = self.history.history["val_loss"] 
 		learning_curves.to_csv(self.results_path + self.model_file_name + "_learning_curve.csv", index=False)
