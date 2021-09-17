@@ -34,7 +34,7 @@ from keras import backend as K
 from keras import applications
 from keras import optimizers
 from keras.callbacks import EarlyStopping, TensorBoard, ReduceLROnPlateau, ModelCheckpoint
-from keras.utils import multi_gpu_model
+#from keras.utils import multi_gpu_model
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -313,22 +313,22 @@ class cnn_utils:
 					 EarlyStopping(monitor='val_loss',min_delta=0,patience=4,verbose=1, mode='auto'),
 					 ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2, cooldown=1, verbose=1, min_lr=1e-7)]
 										
-		self.history = self.model.fit_generator(self.train_generator,
-									  steps_per_epoch = self.train_generator.n // self.batch_size,
-									  epochs = n_epochs,
-									  validation_data = self.validation_generator,
-									  validation_steps = self.validation_generator.n // self.batch_size,
-									  verbose = 1,
-									  class_weight = self.class_weight,
-									  callbacks = callbacks)
+		self.history = self.model.fit(self.train_generator,
+                                steps_per_epoch = self.train_generator.n // self.batch_size,
+								epochs = n_epochs,
+								validation_data = self.validation_generator,
+								validation_steps = self.validation_generator.n // self.batch_size,
+								verbose = 1,
+								class_weight = self.class_weight,
+								callbacks = callbacks)
 									  
 	def save_learning_curves(self):
 		""" Saves the learning curve in results_base_model_path			
 		"""
 		
 		learning_curves = pd.DataFrame()
-		learning_curves["acc"] = self.history.history["acc"]
-		learning_curves["val_acc"] = self.history.history["val_acc"]
+		learning_curves["accuracy"] = self.history.history["accuracy"]
+		learning_curves["val_accuracy"] = self.history.history["val_accuracy"]
 		learning_curves["loss"] = self.history.history["loss"]
 		learning_curves["val_loss"] = self.history.history["val_loss"] 
 		learning_curves.to_csv(self.results_path + self.model_file_name + "_learning_curve.csv", index=False)
